@@ -9,7 +9,7 @@ public class Day4
     {
       Console.WriteLine("---4---");
       Part1();
-      Part2();
+      // Part2();
     }
 
     static void Part1(){
