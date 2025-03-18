@@ -46,45 +46,26 @@ public class Day3
     }
 
     static void Part2(){
-      int[] coordinatesSanta =[0, 0];
-      int[] coordinatesRobo =[0, 0];
+      int[] coordinatesSanta = [0,0], coordinatesRobo =[0, 0];
       List<int[]> visitedCoordinates = new List<int[]>();
-      //visitedCoordinates.Add(coordinates);
-      //Not good -> .Contains checks if the same <object> is in the list, not if the values align
       visitedCoordinates.Add((int[])coordinatesSanta.Clone());//only need to add 1
       Console.WriteLine("Length of input: " + _input.Length);
       for (int i = 0; i < _input.Length; i++)
       {
+        int[] mover = i%2==0?coordinatesRobo:coordinatesSanta;
         switch (_input[i])
         {
-            case '^':
-                    if (i % 2 == 0) coordinatesRobo[1]++;
-                    else coordinatesSanta[1]++;
-                  break;
-            case 'v':
-                    if (i % 2 == 0) coordinatesRobo[1]--;
-                    else coordinatesSanta[1]--;
-                  break;
-            case '<':
-                    if (i % 2 == 0) coordinatesRobo[0]++;
-                    else coordinatesSanta[0]++;
-                  break;
-            case '>':
-                    if (i % 2 == 0) coordinatesRobo[0]--;
-                    else coordinatesSanta[0]--;
-                  break;
+            case '^':mover[1]++;break;
+            case 'v':mover[1]--;break;
+            case '<':mover[0]++;break;
+            case '>':mover[0]--;break;
         }
-        //if (!visitedCoordinates.Contains(coordinates))
-        //Not good -> .Contains checks if the same <object> is in the list, not if the values align
-        if (!visitedCoordinates.Any(c => c[0] == coordinatesRobo[0] && c[1]== coordinatesRobo[1]))
+        if (!visitedCoordinates.Any(c => c[0] == mover[0] && c[1]== mover[1]))
         {
-          visitedCoordinates.Add((int[])coordinatesRobo.Clone());
-        }
-        if (!visitedCoordinates.Any(c => c[0] ==coordinatesSanta[0] && c[1]==coordinatesSanta[1]))
-        {
-          visitedCoordinates.Add((int[])coordinatesSanta.Clone());
+          visitedCoordinates.Add((int[])mover.Clone());
         }
       }
       Console.WriteLine(visitedCoordinates.Count);
     }
+
 }
