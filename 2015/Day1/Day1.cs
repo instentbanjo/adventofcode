@@ -2,12 +2,12 @@ namespace _2015;
 
 public class Day1
 {
-    private static string _input =  File.ReadAllLines("../../../Day1/input.txt")[0];
+    private static string _input =  File.ReadAllLines(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"../../../Day1/input.txt"))[0];
     
     static Day1()
     {
         // Part1();
-        // Part2();
+        Part2();
     }
 
     static void Part1() // Complicated Version
@@ -33,8 +33,6 @@ public class Day1
         int floor = 0;
         bool basementFound = false;
         
-        Console.WriteLine(_input[0]==')');
-
         for (int i = 0; i < _input.Length; i++)
         {
             floor += _input[i] == ')' ? -1 : 1;
