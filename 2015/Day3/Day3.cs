@@ -7,6 +7,7 @@ public class Day3
 
     static Day3()
     {
+      Console.WriteLine("---3---");
       Part1();
       Part2();
     }
