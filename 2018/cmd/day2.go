@@ -4,17 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"os"
+	"regexp"
 
 	"github.com/spf13/cobra"
 )
 
 var day2Cmd = &cobra.Command{
 	Use:   "day2",
-	Short: "Template for Days",
-	Long: `Template for Days
-  Copy Paste for fast dev-work
-  `,
-	Run: day2,
+	Short: "day2",
+	Long:  `day2`,
+	Run:   day2,
 }
 
 func init() {
@@ -39,9 +38,10 @@ func day2(cmd *cobra.Command, args []string) {
 	lineValues := make(map[int]int)
 
 	for _, line := range lines {
+
+		// Part 1
 		hasFoundDouble := false
 		hasFoundTripple := false
-
 		freq := make(map[rune]int)
 		for _, r := range line {
 			freq[r]++
@@ -57,6 +57,19 @@ func day2(cmd *cobra.Command, args []string) {
 			}
 		}
 
+		// Part 2
+		for i, c := range line {
+			// See if any match the currentMatch, if not, add wildcard and go to next char, if still not, continue
+			r, _ := regexp.Compile("^" + line[:i] + "." + line[i+1:] + "$")
+			for _, line := range lines {
+				if r.MatchString(line) {
+					fmt.Println(line)
+					fmt.Println(string(c))
+				}
+			}
+		}
+
 	}
+
 	fmt.Println("Part 1: ", lineValues[2]*lineValues[3])
 }

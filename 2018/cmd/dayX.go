@@ -8,11 +8,9 @@ import (
 
 var dayXCmd = &cobra.Command{
 	Use:   "dayX",
-	Short: "Template for Days",
-	Long: `Template for Days
-  Copy Paste for fast dev-work
-  `,
-	Run: dayX,
+	Short: "dayX",
+	Long:  `dayX`,
+	Run:   dayX,
 }
 
 func init() {
