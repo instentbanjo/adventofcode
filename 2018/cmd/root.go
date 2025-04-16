@@ -30,4 +30,5 @@ func Execute() {
 func init() {
 	rootCmd.AddCommand(day1Cmd)
 	rootCmd.AddCommand(day2Cmd)
+	rootCmd.AddCommand(day3Cmd)
 }
