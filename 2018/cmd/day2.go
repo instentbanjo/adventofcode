@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"regexp"
 
 	"github.com/spf13/cobra"
 )
@@ -37,7 +36,7 @@ func day2(cmd *cobra.Command, args []string) {
 
 	lineValues := make(map[int]int)
 
-	for _, line := range lines {
+	for li, line := range lines {
 
 		// Part 1
 		hasFoundDouble := false
@@ -58,13 +57,36 @@ func day2(cmd *cobra.Command, args []string) {
 		}
 
 		// Part 2
-		for i, c := range line {
-			// See if any match the currentMatch, if not, add wildcard and go to next char, if still not, continue
-			r, _ := regexp.Compile("^" + line[:i] + "." + line[i+1:] + "$")
-			for _, line := range lines {
-				if r.MatchString(line) {
-					fmt.Println(line)
-					fmt.Println(string(c))
+		foundString := false
+		matches := make([]string, len(lines))
+		type DiffMatch struct {
+			Line      string
+			DiffIndex int
+			DiffChar  rune
+		}
+		fMatches := []DiffMatch{}
+		for ci, _ := range line {
+			for _, cline := range lines[li:] {
+				if cline[ci] == line[ci] {
+					matches[li] = cline
+				} else {
+					diff := map[int]string{}
+					diff[ci] = string(cline)
+					fMatches = append(fMatches, DiffMatch{
+						Line:      cline,
+						DiffIndex: ci,
+						DiffChar:  rune(cline[ci]),
+					})
+				}
+				// foreach fMatch ignore at diffIndex and compare the rest
+				for _, fMatch := range fMatches {
+					if line[:fMatch.DiffIndex]+line[fMatch.DiffIndex+1:] == fMatch.Line[:fMatch.DiffIndex]+fMatch.Line[fMatch.DiffIndex+1:] {
+						fmt.Println("Part 2: ", fMatch.Line[:fMatch.DiffIndex]+fMatch.Line[fMatch.DiffIndex+1:])
+						foundString = true
+					}
+					if foundString {
+						return
+					}
 				}
 			}
 		}
